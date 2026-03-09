@@ -3,6 +3,48 @@
 当前阶段，本仓库的 `README` 只说明**本地开发环境的配置步骤（JDK 17 + Tomcat 10 + Maven）**。  
 后续会在文档中逐步补充需求、设计和分支规则等内容。
 
+项目说明：
+
+- 本仓库是一个使用 Maven 管理的 Java Servlet/JSP Web 应用，war 方式部署到本地 Tomcat。
+- 数据全部存放在文本文件中（CSV 为主），不使用数据库。
+
+---
+
+### 项目结构概览（主要文件 / 文件夹）
+
+- `pom.xml`  
+  Maven 构建配置文件，定义了项目名称、打包方式（`war`）、Java 版本、依赖等。
+
+- `src/main/java/`  
+  存放全部 Java 源码。后续建议按包名划分子目录，例如：
+  - `edu/bupt/ta/controller/`：Servlet 控制器；
+  - `edu/bupt/ta/service/`：业务逻辑；
+  - `edu/bupt/ta/storage/`：文件读写封装；
+  - `edu/bupt/ta/model/`：实体类（User / Job / Application 等）。
+
+- `src/main/webapp/`  
+  Web 根目录，包含 JSP 页面和静态资源。
+  - `index.jsp`：入口页面 / 首页。
+  - `WEB-INF/web.xml`：Web 应用部署描述文件，配置 Servlet 映射、欢迎页等。
+
+- `data/`  
+  文本数据存放目录，当前包含示例数据文件：
+  - `ta_users.csv`：示例 TA 用户数据；
+  - `jobs.csv`：示例岗位数据；
+  - `applications.csv`：示例申请记录。
+  业务代码通过读写这些文件来实现“伪数据库”功能。
+
+- `docs/`  
+  项目文档目录：
+  - `project-plan.md`：项目计划与迭代规划；
+  - `requirements.md`：需求与用户故事摘要；
+  - `architecture.md`：架构与分层设计说明。
+  后续可以在此目录下继续补充测试、迭代记录等文件。
+
+- `target/`（构建输出目录，默认不提交到 Git）  
+  运行 `mvn clean package` 后自动生成，用于存放编译后的 class、打包出的 `ta-webapp.war` 等文件。  
+  该目录属于构建产物，其他人可以通过 Maven 在本地重新生成，一般不需要也不应该提交到 GitHub。
+
 ---
 
 ### 一、系统环境配置（JDK 17 + Tomcat 10 + Maven）
